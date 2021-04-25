@@ -1,22 +1,30 @@
 package com.mongodb.dl;
 
 import com.mongodb.*;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.util.JSON;
-import org.bson.Document;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.in;
-import static java.util.Arrays.asList;
-
 public class Test {
     public static void main(String[] args) {
-        
-        listAllCollections();
+
+//        listAllCollections();
+        Properties prop = System.getProperties();
+        String conn = prop.getProperty("mongodb.host");
+        String port = prop.getProperty("mongodb.port");
+        if(conn == null){
+            conn = "localhost";
+        }
+
+        if(port == null){
+            port = "27017";
+        }
+
+        System.out.println(conn);
+        System.out.println(port);
+
+        listAllCollections(conn, Integer.parseInt(port));
     }
 
     private static void listAllCollections() {
@@ -25,7 +33,11 @@ public class Test {
         DBCollection col = db.getCollection("TestCases");
 
         // Check collections
-        mD.getCollections().forEach(System.out::println);
+//        mD.getCollections().forEach(System.out::println);
+        List<String> cols = mD.getCollections();
+        for (String i : cols ) {
+            System.out.println(i);
+        }
     }
 
     private static void practice01_InsertMapObject() {
@@ -69,27 +81,39 @@ public class Test {
     }
 
 
-    private static void practice03_QueryCollection() {
-        MongoDb mD = new MongoDb();
+//    private static void practice03_QueryCollection() {
+//        MongoDb mD = new MongoDb();
+//        DB db = mD.getDB("KataConnect");
+//        DBCollection col = db.getCollection("TestCases");
+//
+//        // Query
+//        BasicDBObject query = new BasicDBObject();
+//        query.put("covername", new BasicDBObject("$in", Arrays.asList("hai")));
+//        DBCursor cursor = col.find(query);
+//
+////        DBCursor myCursor = col.find().sort(new BasicDBObject("date",-1)).limit(10);
+//
+//        List<DBObject> results = cursor.toArray();
+//
+//        List testcases = results.stream()
+////                .filter(m -> m.get(""))
+//                .map(m -> m.get("testcase"))
+//                .collect(Collectors.toList());
+//
+//        results.forEach(System.out::println);
+//        testcases.forEach(System.out::println);
+//    }
+
+
+    private static void listAllCollections(String conn, int port) {
+        MongoDb mD = new MongoDb(conn, port);
         DB db = mD.getDB("KataConnect");
         DBCollection col = db.getCollection("TestCases");
 
-        // Query
-        BasicDBObject  query = new BasicDBObject();
-        query.put("covername", new BasicDBObject("$in", Arrays.asList("hai")));
-        DBCursor cursor = col.find(query);
-
-//        DBCursor myCursor = col.find().sort(new BasicDBObject("date",-1)).limit(10);
-
-        List<DBObject> results  = cursor.toArray();
-
-        List testcases = results.stream()
-//                .filter(m -> m.get(""))
-                .map(m -> m.get("testcase"))
-                .collect(Collectors.toList());
-
-        results.forEach(System.out::println);
-        testcases.forEach(System.out::println);
+        // Check collections
+        List<String> cols = mD.getCollections();
+        for (String i : cols ) {
+            System.out.println(i);
+        }
     }
-
 }

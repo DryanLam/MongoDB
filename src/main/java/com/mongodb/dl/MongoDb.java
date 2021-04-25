@@ -6,14 +6,19 @@ import java.util.List;
 
 public class MongoDb {
 
-    final String CONNECTION = "54.254.2.174";
-    final int PORT = 27017;
+    private String CONNECTION = "54.254.2.174";
+    private int PORT = 27017;
 
     MongoClient dbClient;
     DB db;
 
     MongoDb() {
         dbClient = new MongoClient(CONNECTION, PORT);
+    }
+    MongoDb(String connection, int port) {
+        CONNECTION = connection;
+        PORT = port;
+        dbClient = new MongoClient(connection, port);
     }
 
     public DB getDB(String dbName) {
