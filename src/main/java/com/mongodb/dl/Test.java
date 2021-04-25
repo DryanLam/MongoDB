@@ -15,10 +15,23 @@ import static java.util.Arrays.asList;
 
 public class Test {
     public static void main(String[] args) {
+        
+        listAllCollections();
+    }
+
+    private static void listAllCollections() {
         MongoDb mD = new MongoDb();
-        DB db = mD.getDB("FlashHatch");
+        DB db = mD.getDB("KataConnect");
         DBCollection col = db.getCollection("TestCases");
 
+        // Check collections
+        mD.getCollections().forEach(System.out::println);
+    }
+
+    private static void practice01_InsertMapObject() {
+        MongoDb mD = new MongoDb();
+        DB db = mD.getDB("KataConnect");
+        DBCollection col = db.getCollection("TestCases");
 
         // Work well
         // Set name
@@ -33,6 +46,13 @@ public class Test {
 
         // Insert into collection
         col.insert(new BasicDBObject(data));
+    }
+
+
+    private static void practice02_InsertJsonObject() {
+        MongoDb mD = new MongoDb();
+        DB db = mD.getDB("KataConnect");
+        DBCollection col = db.getCollection("TestCases");
 
 
         // Work well
@@ -46,10 +66,13 @@ public class Test {
 
         DBObject dbObject = (DBObject) JSON.parse(json);
         col.insert(dbObject);
+    }
 
 
-        // Check collections
-        mD.getCollections().forEach(System.out::println);
+    private static void practice03_QueryCollection() {
+        MongoDb mD = new MongoDb();
+        DB db = mD.getDB("KataConnect");
+        DBCollection col = db.getCollection("TestCases");
 
         // Query
         BasicDBObject  query = new BasicDBObject();
@@ -68,6 +91,5 @@ public class Test {
         results.forEach(System.out::println);
         testcases.forEach(System.out::println);
     }
-
 
 }

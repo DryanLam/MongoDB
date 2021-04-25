@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MongoDb {
 
-    final String CONNECTION = "localhost";
+    final String CONNECTION = "54.254.2.174";
     final int PORT = 27017;
 
     MongoClient dbClient;
