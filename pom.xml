@@ -23,19 +23,46 @@
 
     <build>
         <plugins>
+<!--            Spring builds well-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>repackage</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <classifier>spring-boot</classifier>-->
+<!--                            <mainClass>-->
+<!--                                com.mongodb.dl.Test-->
+<!--                            </mainClass>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
                 <executions>
+                    <!-- Run shade goal on package phase -->
                     <execution>
+                        <phase>package</phase>
                         <goals>
-                            <goal>repackage</goal>
+                            <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <classifier>spring-boot</classifier>
-                            <mainClass>
-                                com.mongodb.dl.Test
-                            </mainClass>
+<!--                            <shadedArtifactAttached>true</shadedArtifactAttached>-->
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>com.mongodb.dl.Test</Main-Class>
+                                        <Build-Number>01</Build-Number>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
                         </configuration>
                     </execution>
                 </executions>

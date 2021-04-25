@@ -1,10 +1,12 @@
 package com.mongodb.dl;
 
-import com.mongodb.*;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Test {
     public static void main(String[] args) {
